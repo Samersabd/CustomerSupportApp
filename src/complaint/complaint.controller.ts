@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ComplaintService } from './complaint.service';
 import { Complaint } from 'src/schemas/complaint.schema';
 import { CreateComplaintDto } from './dto/create-complaint.dto';
 import { UpdateComplaintDto } from './dto/update-complaint.dto';
+
+import {Query as ExpressQuery} from 'express-serve-static-core';
 
 @Controller('complaints')
 export class ComplaintController {
@@ -10,8 +12,8 @@ export class ComplaintController {
 
     }
     @Get()
-    async getAllComplaints():Promise<Complaint[]>{
-        return this.complaintService.findAll()
+    async getAllComplaints(@Query()query: ExpressQuery):Promise<Complaint[]>{
+        return this.complaintService.findAll(query)
     }
     @Post()
     async createComplaint(@Body()complaint:CreateComplaintDto):Promise<Complaint>{
