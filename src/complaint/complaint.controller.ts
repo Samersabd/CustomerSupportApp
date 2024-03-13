@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ComplaintService } from './complaint.service';
 import { Complaint } from 'src/schemas/complaint.schema';
 import { CreateComplaintDto } from './dto/create-complaint.dto';
 import { UpdateComplaintDto } from './dto/update-complaint.dto';
 
 import {Query as ExpressQuery} from 'express-serve-static-core';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('complaints')
 export class ComplaintController {
@@ -16,6 +17,7 @@ export class ComplaintController {
         return this.complaintService.findAll(query)
     }
     @Post()
+    @UseGuards(AuthGuard())
     async createComplaint(@Body()complaint:CreateComplaintDto):Promise<Complaint>{
         return this.complaintService.create(complaint);
     }
