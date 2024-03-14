@@ -1,6 +1,7 @@
 //import { Category } from "src/schemas/category.schema"
 
-import { IsOptional, IsString } from "class-validator"
+import { IsEmpty, IsOptional, IsString } from "class-validator"
+import { User } from "src/schemas/User.schema"
 
 export class UpdateComplaintDto{
     @IsOptional()
@@ -14,4 +15,7 @@ export class UpdateComplaintDto{
     @IsOptional()
     @IsString()
     readonly category:string
+
+    @IsEmpty({message: 'You cannot pass user id'})
+    readonly user:User
 }

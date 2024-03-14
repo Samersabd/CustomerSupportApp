@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Complaint } from 'src/schemas/complaint.schema';
 import {Query} from 'express-serve-static-core';
+import { User } from 'src/schemas/User.schema';
 @Injectable()
 export class ComplaintService {
     constructor(@InjectModel(Complaint.name)
@@ -29,8 +30,11 @@ export class ComplaintService {
         .skip(skip);
         return complaints
     }
-    async create(complaint:Complaint):Promise<Complaint>{
-        const res=await this.complaintModel.create(complaint)
+    async create(complaint:Complaint, user:User):Promise<Complaint>{
+
+        const data =Object.assign(Complaint,{user:user._id})
+
+        const res=await this.complaintModel.create(data)
         return res
     }
     async findById(id:string):Promise<Complaint>{
