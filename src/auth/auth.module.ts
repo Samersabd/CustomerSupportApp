@@ -13,6 +13,7 @@ import { AuthController } from './auth.controller';
 @Module({
   imports:[
     UsersModule,
+    
      PassportModule.register({defaultStrategy: 'jwt'}),
      JwtModule.registerAsync({
       inject:[ConfigService],

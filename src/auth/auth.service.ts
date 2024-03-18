@@ -23,19 +23,23 @@ export class AuthService {
      ) {}
 
 
-    // async validateUser(email:string,password:string){
+    async validateUser(email:string,password:string){
 
-    //     const user = await this.userservice.findOne(email);
+        // const user = await this.userservice.findOne(email);
 
-    //     if(user && user.password ===password){
-    //         const {email,password, ...rest}=user;
-    //         return rest;
-    //     }
-    //     return null;
-    // }
+        // if(user && user.password ===password){
+        //     const {email,password, ...rest}=user;
+        //     return rest;
+        // }
+        return null;
+    }
 
-    async signUp(signUpDto:SignUpDto) : Promise<{token:string}>{
+    async signUp(signUpDto:SignUpDto) {
         const {Firstname, email,password} =signUpDto
+
+        const checkuser=this.userModel.findOne({email})
+
+        if(checkuser){return "email already exist"}
 
         const hasedPassword = await bcrypt.hash(password,10)
 
@@ -73,7 +77,7 @@ export class AuthService {
             throw new UnauthorizedException("Invalid email or password")
         }
 
-        const token = this.jwtService.sign({id:user._id})
+        const token = this.jwtService.sign({id:user._id, isAdmin:user.isAdmin})
         //const data =Object.assign(token,{user:user._id})
         //this.tokenModel.create(data)
         return {token}
