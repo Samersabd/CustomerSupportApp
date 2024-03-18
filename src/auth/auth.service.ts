@@ -5,6 +5,7 @@ import { Console } from 'console';
 import { Model } from 'mongoose';
 import { use } from 'passport';
 import { User } from 'src/schemas/User.schema';
+import { Token } from 'src/schemas/Token.schema';
 import { UsersService } from 'src/users/users.service';
 import* as bcrypt from 'bcryptjs'
 import { SignUpDto } from './dto/signup.dto';
@@ -16,7 +17,8 @@ export class AuthService {
     //constructor(private userservice:UsersService , private jwtService: JwtService){}
 
     constructor(@InjectModel(User.name)
-     private userModel:Model<User>, 
+     private userModel:Model<User>,
+    //private tokenModel:Model<Token>,
      private jwtService: JwtService
      ) {}
 
@@ -72,7 +74,8 @@ export class AuthService {
         }
 
         const token = this.jwtService.sign({id:user._id})
-
+        //const data =Object.assign(token,{user:user._id})
+        //this.tokenModel.create(data)
         return {token}
 
     }

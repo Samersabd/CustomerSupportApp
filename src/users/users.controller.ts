@@ -22,8 +22,8 @@ export class UsersController {
         return findUser
     }
     @Post() //POST /users
-    create(@Body(ValidationPipe)creatUserDto: CreateUserDto){
-        return this.userService.create(creatUserDto);
+    create(@Body(ValidationPipe)createUserDto: CreateUserDto){
+        return this.userService.create(createUserDto);
     }
     @Patch(':id')//PATCH or put /users/:id
     async update(@Param('id')id:string, @Body(ValidationPipe) updateUserDto:UpdateUserDto){

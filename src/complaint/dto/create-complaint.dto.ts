@@ -12,6 +12,7 @@ export class CreateComplaintDto{
     readonly description:string
     @IsNotEmpty()
     readonly category:string
+    
     @IsEmpty({message: 'You cannot pass user id'})
     readonly user:User
 

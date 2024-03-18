@@ -1,13 +1,14 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
+
 @Schema({
     timestamps:true
 })
 export class User extends Document{
-    @Prop()
+    @Prop({require: true})
     Firstname:string;
 
-    @Prop()
+    @Prop({require: true})
     Lastname:string;
 
     @Prop({unique:true, required:true})
@@ -15,9 +16,9 @@ export class User extends Document{
 
     @Prop({required:true})
     password:string
-    @Prop()
+    @Prop({default: false})
     isVIP?:boolean
-    @Prop()
+    @Prop({default: false})
     isAdmin?:boolean
 
 }
